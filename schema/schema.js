@@ -8,11 +8,6 @@ const {
     GraphQLList,
 } = require('graphql');
 
-const personals = [
-    { id: '1', name: 'John Doe', mail: 'john@example.com', age: 30, gender: 'Male' },
-    { id: '2', name: 'Jane Smith', mail: 'jane@example.com', age: 25, gender: 'Female' },
-    { id: '3', name: 'Bob Johnson', mail: 'bob@example.com', age: 35, gender: 'Male' },
-];
 
 const PersonalType = new GraphQLObjectType({
     name: 'Personal',
