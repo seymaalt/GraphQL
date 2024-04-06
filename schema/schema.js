@@ -4,6 +4,7 @@ const {
     GraphQLString,
     GraphQLInt,
     GraphQLID,
+    GraphQLList,
 } = require('graphql');
 
 const personals = [
@@ -33,6 +34,12 @@ const RootQuery = new GraphQLObjectType({
             },
             resolve(parent, args) {
                 return personals.find(person => person.id === args.id);
+            }
+        },
+        personals:{
+            type: new GraphQLList(PersonalType),
+            resolve(parent, args) {
+                return personals;
             }
         }
     }
