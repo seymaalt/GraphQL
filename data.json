@@ -1,8 +1,35 @@
 {
-    "Personals": [
-        { "id": "1", "name": "John Doe", "mail": "john@example.com", "age": 30, "gender": "Male" },
-        { "id": "2", "name": "Jane Smith", "mail": "jane@example.com", "age": 25, "gender": "Female" },
-        { "id": "3", "name": "Bob Johnson", "mail": "bob@example.com", "age": 35, "gender": "Male" }
-    ]
-    
+  "Personals": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "mail": "john@example.com",
+      "age": 30,
+      "gender": "Male"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "mail": "jane@example.com",
+      "age": 25,
+      "gender": "Female"
+    },
+    {
+      "id": "3",
+      "name": "Bob Johnson",
+      "mail": "bob@example.com",
+      "age": 35,
+      "gender": "Male"
+    },
+    {
+      "id": "8ac3",
+      "name": "şeyma",
+      "mail": "seyma.6ok@gmail.com"
+    },
+    {
+      "id": "1697",
+      "name": "şeyma1",
+      "mail": "seyma1.6ok@gmail.com"
+    }
+  ]
 }

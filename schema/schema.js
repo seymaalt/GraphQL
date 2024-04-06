@@ -6,13 +6,8 @@ const {
     GraphQLInt,
     GraphQLID,
     GraphQLList,
+    GraphQLNonNull,
 } = require('graphql');
-
-const personals = [
-    { id: '1', name: 'John Doe', mail: 'john@example.com', age: 30, gender: 'Male' },
-    { id: '2', name: 'Jane Smith', mail: 'jane@example.com', age: 25, gender: 'Female' },
-    { id: '3', name: 'Bob Johnson', mail: 'bob@example.com', age: 35, gender: 'Male' },
-];
 
 const PersonalType = new GraphQLObjectType({
     name: 'Personal',
@@ -27,29 +22,75 @@ const PersonalType = new GraphQLObjectType({
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQuery',
-    fields:{
-        personal:{
+    fields: {
+        personal: {
             type: PersonalType,
             args: {
                 id: { type: GraphQLID }
             },
-            resolve(parent, args) {
-              //  return personals.find(person => person.id === args.id);
-              return axios.get('http://localhost:3000/Personals/'+args.id).
-              then(res=>res.data);
+            resolve(_, args) {
+                return axios.get('http://localhost:3000/Personals/' + args.id)
+                    .then(res => res.data);
             }
         },
-        personals:{
+        personals: {
             type: new GraphQLList(PersonalType),
-            resolve(parent, args) {
-              //  return personals;
-              return axios.get('http://localhost:3000/Personals').
-              then(res=>res.data);
+            resolve() {
+                return axios.get('http://localhost:3000/Personals')
+                    .then(res => res.data);
             }
         }
     }
 });
 
+
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addPersonal: {
+            type: PersonalType,
+            args: {
+                name: { type: new GraphQLNonNull(GraphQLString) },
+                mail: { type: new GraphQLNonNull(GraphQLString) },
+                age: { type: GraphQLInt },
+                gender: { type: GraphQLString },
+            },
+            resolve(_, args) {
+                return axios.post('http://localhost:3000/Personals', {
+                    name: args.name,
+                    mail: args.mail,
+                    age: args.age,
+                })
+                    .then(res => res.data);
+            }
+        },
+        updatePersonal: {
+            type: PersonalType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) },
+                name: { type: GraphQLString },
+                mail: { type: GraphQLString },
+                age: { type: GraphQLInt },
+                gender: { type: GraphQLString },
+            },
+            resolve(_, args) {
+                return axios.patch('http://localhost:3000/Personals/' + args.id, args)
+                    .then(res => res.data);
+            }
+        },
+        deletePersonal: {
+            type: PersonalType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) },
+            },
+            resolve(_, args) {
+                return axios.delete('http://localhost:3000/Personals/' + args.id)
+                    .then(res => res.data);
+            },
+        },
+    }
+});
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation: mutation  
 });
