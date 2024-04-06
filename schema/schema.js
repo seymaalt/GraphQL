@@ -1,3 +1,4 @@
+const axios = require('axios');
 const {
     GraphQLObjectType,
     GraphQLSchema,
@@ -33,13 +34,17 @@ const RootQuery = new GraphQLObjectType({
                 id: { type: GraphQLID }
             },
             resolve(parent, args) {
-                return personals.find(person => person.id === args.id);
+              //  return personals.find(person => person.id === args.id);
+              return axios.get('http://localhost:3000/Personals/'+args.id).
+              then(res=>res.data);
             }
         },
         personals:{
             type: new GraphQLList(PersonalType),
             resolve(parent, args) {
-                return personals;
+              //  return personals;
+              return axios.get('http://localhost:3000/Personals').
+              then(res=>res.data);
             }
         }
     }
